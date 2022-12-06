@@ -170,7 +170,7 @@ export class RxView extends Component {
     this.toggleEnabledDate = this.toggleEnabledDate.bind(this);
     this.setSubmitPrescriptionState =
       this.setSubmitPrescriptionState.bind(this);
-      this.closePrescribeModal = this.closePrescribeModal.bind(this);
+    this.closePrescribeModal = this.closePrescribeModal.bind(this);
   }
 
   /**
@@ -247,25 +247,6 @@ export class RxView extends Component {
     this.props.updateDate("start", newStartRange);
   }
 
-  setSubmitPrescriptionState() {
-    this.openPrescribeModal();
-    this.setState({ 
-      value: "",
-      conditionCode: "",
-      dosageAmount: 1,
-      dosageFrequency: 1,
-   });
-    const newRange = {
-      enabled: true,
-      value: undefined,
-    };
-    this.setState({
-      startRange: newRange,
-      endRange: newRange,
-    });
-    // this.props.updateDate("start", newStartRange);
-  }
-
   // Note: A second parameter (date value) is supplied automatically by the Terra onChange function for the DatePicker component
   selectEndDate(event) {
     const value = event.target.value;
@@ -279,6 +260,24 @@ export class RxView extends Component {
     this.props.updateDate("end", newEndRange);
   }
 
+  setSubmitPrescriptionState() {
+    this.openPrescribeModal();
+    // this.setState({
+    //   value: "",
+    //   conditionCode: "",
+    //   dosageAmount: 1,
+    //   dosageFrequency: "daily",
+    // });
+    // const newRange = {
+    //   enabled: true,
+    //   value: undefined,
+    // };
+    // this.setState({
+    //   startRange: newRange,
+    //   endRange: newRange,
+    // });
+  }
+
   toggleEnabledDate(event, range) {
     this.setState({ [`${range}Range`]: event.target.value });
     this.props.toggleEnabledDate(range);
@@ -290,6 +289,7 @@ export class RxView extends Component {
 
   closePrescribeModal() {
     this.setState({ isPrescribeModalOpen: false });
+    window.location.reload();
   }
 
   render() {
@@ -405,7 +405,12 @@ export class RxView extends Component {
                 }
                 isInline
               >
-                <input type="date" id="start-date" name="start-date" onChange={this.selectStartDate}></input>
+                <input
+                  type="date"
+                  id="start-date"
+                  name="start-date"
+                  onChange={this.selectStartDate}
+                ></input>
               </Field>
               <Field
                 label={
@@ -422,7 +427,12 @@ export class RxView extends Component {
                 }
                 isInline
               >
-                <input type="date" id="end-date" name="end-date" onChange={this.selectEndDate}></input>
+                <input
+                  type="date"
+                  id="end-date"
+                  name="end-date"
+                  onChange={this.selectEndDate}
+                ></input>
                 {/* <DatePicker
                   name="end-date"
                   selectedDate={this.state.endRange.value}
